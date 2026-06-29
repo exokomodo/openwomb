@@ -2,6 +2,7 @@
   <PropertyGroup>
     <PackageId>Womb</PackageId>
     <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Warns on whole record copies -->
     <WarnOn>FS3560</WarnOn>
