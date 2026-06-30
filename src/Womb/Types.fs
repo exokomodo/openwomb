@@ -1,6 +1,8 @@
 module Womb.Types
 
-open SDL2Bindings
+open Womb.Backends.SDL.Api.Constants
+open Womb.Backends.SDL.Api.Structs
+open Womb.Backends.SDL.Api.Functions
 open System.Diagnostics
 open Womb.Graphics
 open Womb.Graphics.Types
@@ -17,7 +19,7 @@ type Config<'T> =
     State: 'T;
     Mouse: MouseState;
     InitHandler: Config<'T> -> Config<'T>;
-    EventHandler: Config<'T> -> SDL.SDL_Event -> Config<'T>;
+    EventHandler: Config<'T> -> SDL_Event -> Config<'T>;
     LoopHandler: Config<'T> -> Config<'T>;
     StopHandler: Config<'T> -> Config<'T>;
     FrameTimer: Stopwatch;
@@ -42,10 +44,10 @@ type Config<'T> =
         State = state
         Mouse = MouseState.Default
         InitHandler = fun config -> config
-        EventHandler = fun config (event:SDL.SDL_Event) ->
+        EventHandler = fun config (event:SDL_Event) ->
           match event.key.keysym.sym with
-          | SDL.SDL_Keycode.SDLK_ESCAPE -> stopHandler config
-          | SDL.SDL_Keycode.SDLK_f ->
+          | SDL_Keycode.SDLK_ESCAPE -> stopHandler config
+          | SDL_Keycode.SDLK_f ->
             { config with
                 DisplayConfig = Display.toggleFullscreen config.DisplayConfig }
           | _ -> config

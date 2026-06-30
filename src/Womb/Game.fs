@@ -1,6 +1,8 @@
 module Womb.Game
 
-open SDL2Bindings
+open Womb.Backends.SDL.Api.Constants
+open Womb.Backends.SDL.Api.Structs
+open Womb.Backends.SDL.Api.Functions
 open Womb.Engine.Internals
 open Womb.Graphics
 open Womb.Graphics.Types
@@ -13,7 +15,7 @@ let play<'T>
   height
   (state:'T)
   (initHandlerOpt: option<Config<'T> -> Config<'T>>)
-  (eventHandlerOpt: option<Config<'T> -> SDL.SDL_Event -> Config<'T>>)
+  (eventHandlerOpt: option<Config<'T> -> SDL_Event -> Config<'T>>)
   (loopHandlerOpt: option<Config<'T> -> Config<'T>>) =
     info $"Starting up %s{title}"
     let config =

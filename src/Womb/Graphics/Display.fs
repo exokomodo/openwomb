@@ -1,6 +1,8 @@
 module Womb.Graphics.Display
 
-open SDL2Bindings
+open Womb.Backends.SDL.Api.Constants
+open Womb.Backends.SDL.Api.Structs
+open Womb.Backends.SDL.Api.Functions
 open System.IO
 open System.Linq
 open Womb.Backends.OpenGL.Api
@@ -124,10 +126,10 @@ let compileShader vertexShaderPaths fragmentShaderPaths =
 
 let private initializeGraphicsContext (config:DisplayConfig) =
   debug "BEGIN graphics context initialization"
-  let context = SDL.SDL_GL_CreateContext(config.Window)
-  SDL.SDL_GL_MakeCurrent(config.Window, context)
+  let context = SDL_GL_CreateContext(config.Window)
+  SDL_GL_MakeCurrent(config.Window, context)
     |> ignore
-  Womb.Backends.OpenGL.Module.setup SDL.SDL_GL_GetProcAddress
+  Womb.Backends.OpenGL.Module.setup SDL_GL_GetProcAddress
   debug "END graphics context initialization"
   
   let vendor =
@@ -163,80 +165,80 @@ let private initializeGraphicsContext (config:DisplayConfig) =
   { config with Context = context }
 
 let private setGLAttributes (config:DisplayConfig) =
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION,
     3 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION,
     3 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_CONTEXT_PROFILE_MASK,
-    SDL.SDL_GLprofile.SDL_GL_CONTEXT_PROFILE_CORE ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_CONTEXT_FLAGS,
-    (int)SDL.SDL_GLcontext.SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_RED_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_CONTEXT_PROFILE_MASK,
+    int SDL_GLprofile.SDL_GL_CONTEXT_PROFILE_CORE ) |> ignore
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_CONTEXT_FLAGS,
+    int SDL_GLcontext.SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG ) |> ignore
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_RED_SIZE,
     8 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_GREEN_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_GREEN_SIZE,
     8 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_BLUE_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_BLUE_SIZE,
     8 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_ALPHA_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_ALPHA_SIZE,
     8 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_BUFFER_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_BUFFER_SIZE,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_DOUBLEBUFFER,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_DOUBLEBUFFER,
     1 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_DEPTH_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_DEPTH_SIZE,
     16 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_STENCIL_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_STENCIL_SIZE,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_ACCUM_RED_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_ACCUM_RED_SIZE,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_ACCUM_GREEN_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_ACCUM_GREEN_SIZE,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_ACCUM_BLUE_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_ACCUM_BLUE_SIZE,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_ACCUM_ALPHA_SIZE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_ACCUM_ALPHA_SIZE,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_STEREO,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_STEREO,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_MULTISAMPLEBUFFERS,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_MULTISAMPLEBUFFERS,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_MULTISAMPLESAMPLES,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_MULTISAMPLESAMPLES,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_ACCELERATED_VISUAL,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_ACCELERATED_VISUAL,
     1 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_FRAMEBUFFER_SRGB_CAPABLE,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_FRAMEBUFFER_SRGB_CAPABLE,
     0 ) |> ignore
-  SDL.SDL_GL_SetAttribute(
-    SDL.SDL_GLattr.SDL_GL_CONTEXT_RELEASE_BEHAVIOR,
+  SDL_GL_SetAttribute(
+    SDL_GLattr.SDL_GL_CONTEXT_RELEASE_BEHAVIOR,
     1 ) |> ignore
 
 let private determineWindowFlags (config:DisplayConfig) =
-  SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL
-  ||| SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE
-  ||| SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
+  SDL_WindowFlags.SDL_WINDOW_OPENGL
+  ||| SDL_WindowFlags.SDL_WINDOW_RESIZABLE
+  ||| SDL_WindowFlags.SDL_WINDOW_SHOWN
 
 let private initializeWindow (config:DisplayConfig) =
   debug "Initializing window"
@@ -245,10 +247,10 @@ let private initializeWindow (config:DisplayConfig) =
   { config with
       WindowFlags = windowFlags
       Window =
-        SDL.SDL_CreateWindow(
+        SDL_CreateWindow(
           config.Title,
-          SDL.SDL_WINDOWPOS_CENTERED,
-          SDL.SDL_WINDOWPOS_CENTERED,
+          SDL_WINDOWPOS_CENTERED,
+          SDL_WINDOWPOS_CENTERED,
           (int config.Width),
           (int config.Height),
           windowFlags ) }
@@ -267,7 +269,7 @@ let initialize (config:DisplayConfig) =
   debug
     $"BEGIN graphics initialization for %s{config.Title} with %d{config.Width} by %d{config.Height}"
 
-  if SDL.SDL_Init(SDL.SDL_INIT_VIDEO) <> 0 then 
+  if SDL_Init(SDL_INIT_VIDEO) <> 0 then 
     debug "FAIL graphics initialization"
     None
   else
@@ -280,7 +282,7 @@ let shutdown (config:DisplayConfig) =
   config
 
 let swap (config:DisplayConfig) =
-  SDL.SDL_GL_SwapWindow(config.Window)
+  SDL_GL_SwapWindow(config.Window)
   config
 
 let toggleFullscreen (config:DisplayConfig) =
