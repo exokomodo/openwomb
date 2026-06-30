@@ -27,7 +27,7 @@
         DefineConstants=$(DefineConstants);TREAT_OPENGL_LINK_FAILURE_AS_ERROR
       </Properties>
     </ProjectReference>
-    <PackageReference Include="Argu" Version="6.1.1">
+    <PackageReference Include="Argu" Version="6.2.5">
       <GeneratePathProperty></GeneratePathProperty>
     </PackageReference>
   </ItemGroup>
