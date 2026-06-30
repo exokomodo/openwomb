@@ -1,11 +1,15 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
 updates:
-  - package-ecosystem: dotnet-sdk # See documentation for possible values
+  # Track the .NET SDK version via global.json
+  - package-ecosystem: dotnet-sdk
+    directory: /
+    schedule:
+      interval: weekly
+
+  # Track NuGet package dependencies
+  - package-ecosystem: nuget
     directories:
       - /src/Womb
       - /src/ThirdParty/SDL2
