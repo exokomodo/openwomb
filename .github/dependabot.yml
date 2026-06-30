@@ -7,8 +7,8 @@ version: 2
 updates:
   - package-ecosystem: dotnet-sdk # See documentation for possible values
     directories:
-      - /
-      - /src/womb
+      - /src/Womb
       - /src/ThirdParty/SDL2
+      - /examples/Playground
     schedule:
       interval: weekly
