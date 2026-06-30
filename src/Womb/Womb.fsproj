@@ -18,8 +18,11 @@
     <None Include="../../$(PackageLicenseFile)" Pack="true" PackagePath="$(PackageLicenseFile)"/>
     <None Include="../../$(PackageReadmeFile)" Pack="true" PackagePath="$(PackageReadmeFile)"/>
     
-    <ProjectReference Include="..\ThirdParty\SDL2\SDL2Bindings.csproj" />
-    
+    <!-- SDL -->
+    <Compile Include="Backends/SDL/Api/Constants.fs" />
+    <Compile Include="Backends/SDL/Api/Structs.fs" />
+    <Compile Include="Backends/SDL/Api/Functions.fs" />
+    <Compile Include="Backends/SDL/Module.fs" />
     <!-- Logging -->
     <Compile Include="Logging.fs" />
     <Compile Include="Lib/Types.fs" />

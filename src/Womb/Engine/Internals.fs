@@ -1,6 +1,8 @@
 module Womb.Engine.Internals
 
-open SDL2Bindings
+open Womb.Backends.SDL.Api.Constants
+open Womb.Backends.SDL.Api.Structs
+open Womb.Backends.SDL.Api.Functions
 open Womb.Graphics
 open Womb.Graphics.Types
 open Womb.Input.Types
@@ -8,10 +10,10 @@ open Womb.Logging
 open Womb.Types
 open Womb.Backends.OpenGL.Api
 
-let private handleQuit (config:Config<'T>) (event:SDL.SDL_Event) =
+let private handleQuit (config:Config<'T>) (event:SDL_Event) =
   config.StopHandler config
 
-let private handleWindowResize (config:Config<'T>) (event:SDL.SDL_WindowEvent) =
+let private handleWindowResize (config:Config<'T>) (event:SDL_WindowEvent) =
   let width = event.data1
   let height = event.data2
   
@@ -29,23 +31,23 @@ let private handleWindowResize (config:Config<'T>) (event:SDL.SDL_WindowEvent) =
             Width = uint width
             Height = uint height } }
 
-let private handleWindowEvent (config:Config<'T>) (event:SDL.SDL_WindowEvent) =
+let private handleWindowEvent (config:Config<'T>) (event:SDL_WindowEvent) =
   match event.windowEvent with
-  | SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED -> handleWindowResize config event
+  | SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED -> handleWindowResize config event
   | _ -> config
 
-let private handleEvent (config:Config<'T>) (event:SDL.SDL_Event) =
+let private handleEvent (config:Config<'T>) (event:SDL_Event) =
   match event.typeFSharp with
-  | SDL.SDL_EventType.SDL_WINDOWEVENT -> handleWindowEvent config event.window
-  | SDL.SDL_EventType.SDL_QUIT -> handleQuit config event
-  | SDL.SDL_EventType.SDL_KEYUP
-    | SDL.SDL_EventType.SDL_KEYDOWN
-    | SDL.SDL_EventType.SDL_MOUSEBUTTONUP
-    | SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN -> config.EventHandler config event
+  | SDL_EventType.SDL_WINDOWEVENT -> handleWindowEvent config event.window
+  | SDL_EventType.SDL_QUIT -> handleQuit config event
+  | SDL_EventType.SDL_KEYUP
+    | SDL_EventType.SDL_KEYDOWN
+    | SDL_EventType.SDL_MOUSEBUTTONUP
+    | SDL_EventType.SDL_MOUSEBUTTONDOWN -> config.EventHandler config event
   | _ -> config
 
 let private pollMouseState<'T> (config:Config<'T>) : MouseState =
-  let (_, x, y) = SDL.SDL_GetMouseState()
+  let (_, x, y) = SDL_GetMouseState()
   let (adjustedX, adjustedY) = (
     x,
     int(config.DisplayConfig.Height) - y
@@ -58,15 +60,15 @@ let private pollInputs (config:Config<'T>) : Config<'T> =
       Mouse = pollMouseState config }
 
 let rec private eventLoop (config:Config<'T>) =
-  let mutable event = SDL.SDL_Event()
-  if SDL.SDL_PollEvent(&event) = 0 then
+  let mutable event = SDL_Event()
+  if SDL_PollEvent(&event) = 0 then
     config
   else
     handleEvent config event |> eventLoop
 
 let internal shutdown (config: Config<'T>) : Config<'T> =
   warn "Shutting down internals"
-  SDL.SDL_Quit()
+  SDL_Quit()
   config.StopHandler config
 
 let clock config =

@@ -1,6 +1,8 @@
 module Womb.Graphics.Types
 
-open SDL2Bindings
+open Womb.Backends.SDL.Api.Constants
+open Womb.Backends.SDL.Api.Structs
+open Womb.Backends.SDL.Api.Functions
 open Womb.Lib.Types
 
 type DisplayConfig =
@@ -8,7 +10,7 @@ type DisplayConfig =
     Height: uint;
     Title: string;
     IsFullscreen: bool;
-    WindowFlags: SDL.SDL_WindowFlags;
+    WindowFlags: SDL_WindowFlags;
     Window: nativeint;
     Context: nativeint; }
 
@@ -17,7 +19,7 @@ type DisplayConfig =
         Height = 600u
         Title = "Womb"
         IsFullscreen = false
-        WindowFlags = SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN
+        WindowFlags = SDL_WindowFlags.SDL_WINDOW_SHOWN
         Window = 0n
         Context = 0n }
 
