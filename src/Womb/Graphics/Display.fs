@@ -247,13 +247,13 @@ let private initializeWindow (config:DisplayConfig) =
   { config with
       WindowFlags = windowFlags
       Window =
-        SDL_CreateWindow(
-          config.Title,
-          SDL_WINDOWPOS_CENTERED,
-          SDL_WINDOWPOS_CENTERED,
-          (int config.Width),
-          (int config.Height),
-          windowFlags ) }
+        SDL_CreateWindow
+          config.Title
+          SDL_WINDOWPOS_CENTERED
+          SDL_WINDOWPOS_CENTERED
+          (int config.Width)
+          (int config.Height)
+          windowFlags }
 
 let clear (config:DisplayConfig) =
   glClearColor

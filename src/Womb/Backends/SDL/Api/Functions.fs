@@ -63,12 +63,17 @@ extern void SDL_GL_SwapWindow(nativeint window)
 [<DllImport(DllName, CallingConvention = CallingConvention.Cdecl)>]
 extern void SDL_GL_DeleteContext(nativeint context)
 
+/// Raw P/Invoke: accepts a native pointer to the proc name (nativeint -> nativeint).
+/// This matches the ProcAddressHandler delegate in the OpenGL backend.
 [<DllImport(DllName, EntryPoint = "SDL_GL_GetProcAddress", CallingConvention = CallingConvention.Cdecl)>]
-extern nativeint private INTERNAL_SDL_GL_GetProcAddress(byte[] proc)
+extern nativeint SDL_GL_GetProcAddress(nativeint proc)
 
-/// Retrieve an OpenGL function pointer by name.
-let SDL_GL_GetProcAddress (proc: string) =
-    INTERNAL_SDL_GL_GetProcAddress(Encoding.UTF8.GetBytes(proc + "\000"))
+[<DllImport(DllName, EntryPoint = "SDL_GL_GetProcAddress", CallingConvention = CallingConvention.Cdecl)>]
+extern nativeint private INTERNAL_SDL_GL_GetProcAddressBytes(byte[] proc)
+
+/// String-convenience wrapper: looks up an OpenGL function pointer by name.
+let SDL_GL_GetProcAddressStr (proc: string) : nativeint =
+    INTERNAL_SDL_GL_GetProcAddressBytes(Encoding.UTF8.GetBytes(proc + "\000"))
 
 // ---------------------------------------------------------------------------
 // GL attributes
@@ -108,14 +113,14 @@ extern void SDL_PumpEvents()
 // Input / mouse
 // ---------------------------------------------------------------------------
 
-[<DllImport(DllName, CallingConvention = CallingConvention.Cdecl)>]
-extern uint32 SDL_GetMouseState(int& x, int& y)
+[<DllImport(DllName, EntryPoint = "SDL_GetMouseState", CallingConvention = CallingConvention.Cdecl)>]
+extern uint32 private INTERNAL_SDL_GetMouseState(int& x, int& y)
 
 /// Returns (buttonMask, x, y).
 let SDL_GetMouseState () =
     let mutable x = 0
     let mutable y = 0
-    let mask = SDL_GetMouseState(&x, &y)
+    let mask = INTERNAL_SDL_GetMouseState(&x, &y)
     (mask, x, y)
 
 // ---------------------------------------------------------------------------

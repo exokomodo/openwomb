@@ -1,5 +1,7 @@
 module Womb.Backends.SDL.Api.Structs
 
+#nowarn "9" // Unverifiable IL due to explicit-layout union fields
+
 open System
 open System.Runtime.InteropServices
 open Womb.Backends.SDL.Api.Constants
